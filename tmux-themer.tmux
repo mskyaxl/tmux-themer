@@ -29,9 +29,9 @@ main() {
   local mode
   mode=$(get_option "$MODE_OPTION" "$DEFAULT_MODE")
   
-  tmux source-file "${CURRENT_DIR}/${separator}-separator.conf"
-  tmux source-file "${CURRENT_DIR}/${theme}-${mode}.conf"
-  tmux source-file "${CURRENT_DIR}/base.conf"
+  tmux source-file "${CURRENT_DIR}/${separator}-separator.tmuxtheme"
+  tmux source-file "${CURRENT_DIR}/${theme}-${mode}.tmuxtheme"
+  tmux source-file "${CURRENT_DIR}/base.tmuxtheme"
 }
 
 main
