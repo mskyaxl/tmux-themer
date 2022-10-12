@@ -3,4 +3,5 @@ set -g @themer-color2 "#282828"
 set -g @themer-color3 "#a89984"
 set -g @themer-color4 "#ddc7a1"
 set -g @themer-color5 "#32302f"
+set -g @themer-color6 "#458588"
 

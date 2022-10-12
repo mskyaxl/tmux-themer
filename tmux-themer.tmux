@@ -7,6 +7,8 @@ MODE_OPTION="@themer-mode"
 DEFAULT_MODE="dark"
 SEPARATOR_OPTION="@themer-separator"
 DEFAULT_SEPARATOR="base"
+STATUS_PREFIX="@status-right-prefix"
+DEFAULT_STATUS_RIGHT_PREFIX="#{@themer-right-start-blockB}"
 
 
 get_option() {
@@ -28,10 +30,15 @@ main() {
   separator=$(get_option "$SEPARATOR_OPTION" "$DEFAULT_SEPARATOR")
   local mode
   mode=$(get_option "$MODE_OPTION" "$DEFAULT_MODE")
-  
-  tmux source-file "${CURRENT_DIR}/${separator}-separator.tmuxtheme"
-  tmux source-file "${CURRENT_DIR}/${theme}-${mode}.tmuxtheme"
-  tmux source-file "${CURRENT_DIR}/base.tmuxtheme"
+  status=$(get_option "$STATUS_PREFIX" "$DEFAULT_STATUS_RIGHT_PREFIX") 
+  theme_file="$(mktemp)"
+ # set -goqF @themer-status-right-prefix "#{@themer-right-start-blockB}" 
+  cat "${CURRENT_DIR}/${separator}-separator.tmuxtheme" >> "$theme_file"   
+  cat "${CURRENT_DIR}/${theme}-${mode}.tmuxtheme" >> "$theme_file"
+  cat "${CURRENT_DIR}/base.tmuxtheme" >> "$theme_file"
+#  sed -i 's/set -goqF @themer-status-right-prefix \"#{@themer-right-start-blockB}\"/set -goqF @themer-status-right-prefix \"$status\"/g' $theme_file
+  tmux source-file "$theme_file"
+  rm "$theme_file"
 }
 
 main

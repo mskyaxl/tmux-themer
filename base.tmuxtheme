@@ -1,37 +1,54 @@
 set -g @themer-txt-format1 "nobold,nounderscore,noitalics"
 set -g @themer-txt-format2 "bold"
 
-set -g @themer-style1 "fg=#{@themer-color5},bg=#{@themer-color3},#{@themer-txt-format2}"
+set -g @themer-style1 "fg=#{@themer-color5},bg=#{@themer-color3},\
+#{@themer-txt-format2}"
 set -g @themer-style2 "fg=#{@themer-color4},bg=#{@themer-color1}"
-set -g @themer-style3 "fg=#{@themer-color3},bg=#{@themer-color2},#{@themer-txt-format1}"
-set -g @themer-style4 "fg=#{@themer-color1},bg=#{@themer-color2},#{@themer-txt-format1}"
+set -g @themer-style3 "fg=#{@themer-color3},bg=#{@themer-color2},\
+#{@themer-txt-format1}"
+set -g @themer-style4 "fg=#{@themer-color1},bg=#{@themer-color2},\
+#{@themer-txt-format1}"
 set -g @themer-style5 "fg=#{@themer-color4},bg=#{@themer-color2}"
-set -g @themer-style6 "fg=#{@themer-color3},bg=#{@themer-color1},#{@themer-txt-format1}"
-set -g @themer-style7 "fg=#{@themer-color2},bg=#{@themer-color1},#{@themer-txt-format1}"
+set -g @themer-style6 "fg=#{@themer-color3},bg=#{@themer-color1},\
+#{@themer-txt-format1}"
+set -g @themer-style7 "fg=#{@themer-color2},bg=#{@themer-color1},\
+#{@themer-txt-format1}"
+set -g @themer-style8 "fg=#{@themer-color2},bg=#{@themer-color6},\
+#{@themer-txt-format2}"
+set -g @themer-style9 "fg=#{@themer-color6},bg=#{@themer-color2},\
+#{@themer-txt-format2}"
+set -g @themer-style10 "fg=#{@themer-color1},bg=#{@themer-color6},\
+#{@themer-txt-format2}"
+set -g @themer-style11 "fg=#{@themer-color1},bg=#{@themer-color6},\
+#{@themer-txt-format2}"
 
-set -gF @themer-block-style1 "#[#{@themer-style1}]"
-set -gF @themer-block-style2 "#[#{@themer-style2}]"
-set -gF @themer-block-style3 "#[#{@themer-style3}]"
-set -gF @themer-block-style4 "#[#{@themer-style4}]"
-set -gF @themer-block-style5 "#[#{@themer-style5}]"
-set -gF @themer-block-style6 "#[#{@themer-style6}]"
-set -gF @themer-block-style7 "#[#{@themer-style7}]"
+
+set -g @themer-date "%Y-%m-%d"
+set -g @themer-hour "%H:%M"
+set -go @themer-host "#h"
 
 #status-left
-set -gF @themer-left-start-blockA "#{@themer-block-style1}"
-set -gF @themer-left-stop-blockA "#{@themer-block-style3}#{@themer-left-block-separator}"
+set -gF @themer-left-start-blockA "#[#{@themer-style1}]"
+set -gF @themer-left-stop-blockA "\
+#[#{@themer-style3}]\
+#{@themer-left-block-separator}"
 
-set -gF @themer-left-start-blockB "#{@themer-block-style7}#{@themer-left-block-separator}#{@themer-block-style2}"
-set -gF @themer-left-stop-blockB "#{@themer-block-style4}#{@themer-left-block-separator}"
+set -gF @themer-left-start-blockB "\
+#[#{@themer-style7}]\
+#{@themer-left-block-separator}\
+#[#{@themer-style2}]"
+set -gF @themer-left-stop-blockB "\
+#[#{@themer-style4}]\
+#{@themer-left-block-separator}"
 
-set -gF @themer-left-start-blockC "#{@themer-block-style5}"
-set -gF @themer-left-stop-blockC ""
-
+set -gF @themer-left-start-blockC "#[#{@themer-style5}]"
+set -g @themer-left-stop-blockC ""
+set -g @themer-left-block-content "#S"
 
 set -go @themer-status-left-prefix ""
 set -gqF @themer-status-left-center "\
 #{@themer-left-start-blockA}\
- ##S \
+ #{@themer-left-block-content} \
 #{@themer-left-stop-blockA}"
 set -go @themer-status-left-postfix ""
 set -gF @themer-status-left "\
@@ -40,13 +57,20 @@ set -gF @themer-status-left "\
 #{@themer-status-left-postfix}"
 
 #windows-list
-set -go @themer-window-status-prefix ""
+
+set -g @themer-window-status-index "#I"
+set -g @themer-window-status-name "#W:#F"
+
+set -gF @themer-window-status-content "\
+ #{@themer-window-status-index} \
+#{@themer-window-sector-separator}\
+ #{@themer-window-status-name} "
+set -g @themer-window-status-prefix ""
 set -gF @themer-window-status-center "\
 #{@themer-left-start-blockC}\
- ##I #{@themer-window-sector-separator}\
- ##W:##F \
+#{@themer-window-status-content}\
 #{@themer-left-stop-blockC}"
-set -go @themer-window-status-postfix ""
+set -g @themer-window-status-postfix ""
 set -gF @themer-window-status "\
 #{@themer-window-status-prefix}\
 #{@themer-window-status-center}\
@@ -55,8 +79,9 @@ set -gF @themer-window-status "\
 set -gF @themer-active-window-status-prefix ""
 set -gF @themer-active-window-status-center "\
 #{@themer-left-start-blockB}\
- ##I #{@themer-left-sector-separator}\
- ##W:##F \
+ #{@themer-window-status-index} \
+#{@themer-left-sector-separator}\
+ #{@themer-window-status-name} \
 #{@themer-left-stop-blockB}"
 set -gF @themer-active-window-status-postfix ""
 set -gF @themer-active-window-status "\
@@ -66,26 +91,49 @@ set -gF @themer-active-window-status "\
 
 
 #status-right
-set -gF @themer-right-start-blockB "\
-#{@themer-block-style4}\
+set -gF @themer-right-start-blockC "\
+#[#{@themer-style9}]\
 #{@themer-right-block-separator}\
-#{@themer-block-style2}"
-set -gF @themer-right-stop-blockB ""
-##{@themer-block-style7}\
-##{@themer-right-block-separator}\
-##{@themer-block-style2}"
+#[#{@themer-style8}]"
+set -gF @themer-right-stop-blockC ""
+#[#{@themer-style10}]\
+#{@themer-right-block-separator}"
 
-set -gF @themer-right-start-blockA "#{@themer-block-style6}\
+set -gF @themer-right-start-blockB "\
+#[#{@themer-style11}]\
 #{@themer-right-block-separator}\
-#{@themer-block-style1}"
+#[#{@themer-style2}]"
+set -gF @themer-right-stop-blockB ""
+
+##[#{@themer-style7}]\
+##{@themer-right-block-separator}\
+##[#{@themer-style2}]"
+
+set -gF @themer-right-start-blockA "\
+#[#{@themer-style6}]\
+#{@themer-right-block-separator}\
+#[#{@themer-style1}]"
 set -gF @themer-right-stop-blockA ""
 
-set -goF @themer-status-right-prefix "#{@themer-right-start-blockB}"
-set -goF @themer-status-right-center "\
- %Y-%m-%d #{@themer-right-sector-separator}\
- %H:%M "
-set -goF @themer-status-right-postfix "#{@themer-right-stop-blockB}\
-#{@themer-right-start-blockA} #h #{@themer-right-stop-blockA}"
+set -gqFo @themer-right-content-blockC ""
+
+set -gqF @themer-status-right-prefix "\
+#{@themer-right-start-blockC}\
+#{@themer-right-content-blockC}
+#{@themer-right-stop-blockC}"
+
+set -gqF @themer-status-right-center "\
+#{@themer-right-start-blockB}\
+ #{@themer-date} \
+#{@themer-right-sector-separator}\
+ #{@themer-hour} \
+#{@themer-right-stop-blockB}"
+
+set -gqF @themer-status-right-postfix "\
+#{@themer-right-start-blockA}\
+ #{@themer-host} \
+#{@themer-right-stop-blockA}"
+
 set -gF @themer-status-right "\
 #{@themer-status-right-prefix}\
 #{@themer-status-right-center}\
