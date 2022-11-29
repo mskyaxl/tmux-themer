@@ -119,7 +119,7 @@ set -gqFo @themer-right-content-blockC ""
 
 set -gqF @themer-status-right-prefix "\
 #{@themer-right-start-blockC}\
-#{@themer-right-content-blockC}
+#{@themer-right-content-blockC}\
 #{@themer-right-stop-blockC}"
 
 set -gqF @themer-status-right-center "\
